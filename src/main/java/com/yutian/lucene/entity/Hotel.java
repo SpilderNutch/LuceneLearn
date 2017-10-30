@@ -2,6 +2,9 @@ package com.yutian.lucene.entity;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Hotel {
 
 	/**
@@ -280,4 +283,20 @@ public class Hotel {
 	public void setLkCreatetime(Date lkCreatetime) {
 		this.lkCreatetime = lkCreatetime;
 	}
+	
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+				.append("id:"+getId())
+				.append("lkName:",getLkName())
+				.append("lkIdCode",getLkIdCode())
+				.append("lkLtime:",getLkLtime())
+				.append("lkEtime:",getLkEtime())
+				.append("lkNoroom:",getLkNoroom())
+				.append("lgHName:",getLgHName())
+				.append("lkCreatetime:",getLkCreatetime())
+				.toString();
+	}
+	
+	
 }
