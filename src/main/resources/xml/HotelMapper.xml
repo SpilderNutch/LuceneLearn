@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yutian.lucene.dao.HotelMapper">
+  <resultMap id="BaseResultMap" type="com.yutian.lucene.entity.Hotel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lk_name" jdbcType="VARCHAR" property="lkName" />
+    <result column="lk_sex" jdbcType="VARCHAR" property="lkSex" />
+    <result column="lk_idcode" jdbcType="VARCHAR" property="lkIdCode" />
+    <result column="lk_address" jdbcType="VARCHAR" property="lkAddress" />
+    <result column="lg_hname" jdbcType="VARCHAR" property="lgHName" />
+    <result column="lg_haddress" jdbcType="VARCHAR" property="lgHAddress" />
+    <result column="lg_telphone" jdbcType="VARCHAR" property="lgTelphone" />
+    <result column="lk_noroom" jdbcType="VARCHAR" property="lkNoroom" />
+    <result column="lk_ltime" jdbcType="TIMESTAMP" property="lkLtime" />
+    <result column="lk_etime" jdbcType="TIMESTAMP" property="lkEtime" />
+    <result column="lk_createtime" jdbcType="TIMESTAMP" property="lkCreatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, lk_name, lk_sex, lk_idcode, lk_address, lg_hname, lg_haddress, lg_telphone, lk_noroom, 
+    lk_ltime, lk_etime, lk_createtime
+  </sql>
+  <select id="selectByExample" parameterType="com.yutian.lucene.entity.HotelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Hotel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Hotel
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Hotel
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yutian.lucene.entity.HotelExample">
+    delete from Hotel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yutian.lucene.entity.Hotel">
+    insert into Hotel (id, lk_name, lk_sex, 
+      lk_idcode, lk_address, lg_hname, 
+      lg_haddress, lg_telphone, lk_noroom, 
+      lk_ltime, lk_etime, lk_createtime
+      )
+    values (#{id,jdbcType=INTEGER}, #{lkName,jdbcType=VARCHAR}, #{lkSex,jdbcType=VARCHAR}, 
+      #{lkIdCode,jdbcType=VARCHAR}, #{lkAddress,jdbcType=VARCHAR}, #{lgHName,jdbcType=VARCHAR}, 
+      #{lgHAddress,jdbcType=VARCHAR}, #{lgTelphone,jdbcType=VARCHAR}, #{lkNoroom,jdbcType=VARCHAR}, 
+      #{lkLtime,jdbcType=TIMESTAMP}, #{lkEtime,jdbcType=TIMESTAMP}, #{lkCreatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yutian.lucene.entity.Hotel">
+    insert into Hotel
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lkName != null">
+        lk_name,
+      </if>
+      <if test="lkSex != null">
+        lk_sex,
+      </if>
+      <if test="lkIdCode != null">
+        lk_idcode,
+      </if>
+      <if test="lkAddress != null">
+        lk_address,
+      </if>
+      <if test="lgHName != null">
+        lg_hname,
+      </if>
+      <if test="lgHAddress != null">
+        lg_haddress,
+      </if>
+      <if test="lgTelphone != null">
+        lg_telphone,
+      </if>
+      <if test="lkNoroom != null">
+        lk_noroom,
+      </if>
+      <if test="lkLtime != null">
+        lk_ltime,
+      </if>
+      <if test="lkEtime != null">
+        lk_etime,
+      </if>
+      <if test="lkCreatetime != null">
+        lk_createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lkName != null">
+        #{lkName,jdbcType=VARCHAR},
+      </if>
+      <if test="lkSex != null">
+        #{lkSex,jdbcType=VARCHAR},
+      </if>
+      <if test="lkIdCode != null">
+        #{lkIdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lkAddress != null">
+        #{lkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lgHName != null">
+        #{lgHName,jdbcType=VARCHAR},
+      </if>
+      <if test="lgHAddress != null">
+        #{lgHAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lgTelphone != null">
+        #{lgTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="lkNoroom != null">
+        #{lkNoroom,jdbcType=VARCHAR},
+      </if>
+      <if test="lkLtime != null">
+        #{lkLtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lkEtime != null">
+        #{lkEtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lkCreatetime != null">
+        #{lkCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yutian.lucene.entity.HotelExample" resultType="java.lang.Long">
+    select count(*) from Hotel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Hotel
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.lkName != null">
+        lk_name = #{record.lkName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lkSex != null">
+        lk_sex = #{record.lkSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lkIdCode != null">
+        lk_idcode = #{record.lkIdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lkAddress != null">
+        lk_address = #{record.lkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lgHName != null">
+        lg_hname = #{record.lgHName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lgHAddress != null">
+        lg_haddress = #{record.lgHAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lgTelphone != null">
+        lg_telphone = #{record.lgTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lkNoroom != null">
+        lk_noroom = #{record.lkNoroom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lkLtime != null">
+        lk_ltime = #{record.lkLtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lkEtime != null">
+        lk_etime = #{record.lkEtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lkCreatetime != null">
+        lk_createtime = #{record.lkCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Hotel
+    set id = #{record.id,jdbcType=INTEGER},
+      lk_name = #{record.lkName,jdbcType=VARCHAR},
+      lk_sex = #{record.lkSex,jdbcType=VARCHAR},
+      lk_idcode = #{record.lkIdCode,jdbcType=VARCHAR},
+      lk_address = #{record.lkAddress,jdbcType=VARCHAR},
+      lg_hname = #{record.lgHName,jdbcType=VARCHAR},
+      lg_haddress = #{record.lgHAddress,jdbcType=VARCHAR},
+      lg_telphone = #{record.lgTelphone,jdbcType=VARCHAR},
+      lk_noroom = #{record.lkNoroom,jdbcType=VARCHAR},
+      lk_ltime = #{record.lkLtime,jdbcType=TIMESTAMP},
+      lk_etime = #{record.lkEtime,jdbcType=TIMESTAMP},
+      lk_createtime = #{record.lkCreatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yutian.lucene.entity.Hotel">
+    update Hotel
+    <set>
+      <if test="lkName != null">
+        lk_name = #{lkName,jdbcType=VARCHAR},
+      </if>
+      <if test="lkSex != null">
+        lk_sex = #{lkSex,jdbcType=VARCHAR},
+      </if>
+      <if test="lkIdCode != null">
+        lk_idcode = #{lkIdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lkAddress != null">
+        lk_address = #{lkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lgHName != null">
+        lg_hname = #{lgHName,jdbcType=VARCHAR},
+      </if>
+      <if test="lgHAddress != null">
+        lg_haddress = #{lgHAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lgTelphone != null">
+        lg_telphone = #{lgTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="lkNoroom != null">
+        lk_noroom = #{lkNoroom,jdbcType=VARCHAR},
+      </if>
+      <if test="lkLtime != null">
+        lk_ltime = #{lkLtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lkEtime != null">
+        lk_etime = #{lkEtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lkCreatetime != null">
+        lk_createtime = #{lkCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yutian.lucene.entity.Hotel">
+    update Hotel
+    set lk_name = #{lkName,jdbcType=VARCHAR},
+      lk_sex = #{lkSex,jdbcType=VARCHAR},
+      lk_idcode = #{lkIdCode,jdbcType=VARCHAR},
+      lk_address = #{lkAddress,jdbcType=VARCHAR},
+      lg_hname = #{lgHName,jdbcType=VARCHAR},
+      lg_haddress = #{lgHAddress,jdbcType=VARCHAR},
+      lg_telphone = #{lgTelphone,jdbcType=VARCHAR},
+      lk_noroom = #{lkNoroom,jdbcType=VARCHAR},
+      lk_ltime = #{lkLtime,jdbcType=TIMESTAMP},
+      lk_etime = #{lkEtime,jdbcType=TIMESTAMP},
+      lk_createtime = #{lkCreatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+ <!-- 数据库驱动包位置 -->  
+    <classPathEntry  
+        location="/Users/yuouyang/.m2/repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar" /> 
+ 
+  <context id="context1">
+  	
+  	<!--  数据库链接URL、用户名、密码 -->
+    <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/spilderNutch?useUnicode=true&amp;characterEncoding=UTF-8" 
+    		driverClass="com.mysql.jdbc.Driver" 
+    		password="OUYANGYU" userId="root" />
+    	<!-- 生成模型的包名和位置，就是mybatis 里面用的一些entity 类的存放路径配置 -->
+    <javaModelGenerator targetPackage="com.yutian.lucene.entity" targetProject="LuceneLearn/src/main/java" />
+    <!-- 生成的映射文件报名和位置 -->  
+    <sqlMapGenerator targetPackage="com.yutian.lucene.mapper" targetProject="LuceneLearn/src/main/java" />
+    <javaClientGenerator targetPackage="com.yutian.lucene.dao" targetProject="LuceneLearn/src/main/java" type="XMLMAPPER" />
+    <table schema="spilderNutch" tableName="Hotel">
+    	  	<columnOverride property="id"  column="id"/>
+		<columnOverride property="lkName" column="lk_name"/>
+		<columnOverride property="lkSex" column="lk_sex"/>
+		<columnOverride property="lkIdCode" column="lk_idcode"/>
+		<columnOverride property="lkAddress" column="lk_address"/>
+		<columnOverride property="lgHName" column="lg_hname"/>
+		<columnOverride property="lgHAddress" column="lg_haddress"/>
+		<columnOverride property="lgTelphone" column="lg_telphone"/>
+		<columnOverride property="lkNoroom" column="lk_noroom"/>
+		<columnOverride property="lkLtime" column="lk_ltime"/>
+		<columnOverride property="lkEtime" column="lk_etime"/>
+		<columnOverride property="lkCreatetime" column="lk_createtime"/>
+    </table>
+  </context>
+</generatorConfiguration>
