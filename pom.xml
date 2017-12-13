@@ -86,25 +86,58 @@
 	    <version>1.7.25</version>
 	</dependency>
 	
+	<!-- 使用JDK logger 无论哪个框架在前面，那么哪个匹配到就能使用-->
+	<!-- 
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-jdk14</artifactId>
+	    <version>1.7.25</version>
+	    <scope>test</scope>
+	</dependency>
+	 -->
+	
 	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+	<!-- 屏蔽掉log4j用于测试jdk logger.-->
 	<dependency>
 	    <groupId>org.apache.logging.log4j</groupId>
 	    <artifactId>log4j-core</artifactId>
 	    <version>2.8.2</version>
 	</dependency>
+	 
 	
 	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+	<!-- 屏蔽掉log4j用于测试jdk logger.-->
 	<dependency>
 	    <groupId>org.apache.logging.log4j</groupId>
 	    <artifactId>log4j-slf4j-impl</artifactId>
 	    <version>2.8.1</version>
 	</dependency>
+	 
+	 
+	 <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14 -->
+	
+	
+	 
 	
 	<!-- commons-lang3 -->
 	<dependency>
 		<groupId>org.apache.commons</groupId>
 		<artifactId>commons-lang3</artifactId>
 		<version>3.4</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>druid</artifactId>
+	    <version>1.1.5</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-core -->
+	<dependency>
+	    <groupId>org.apache.lucene</groupId>
+	    <artifactId>lucene-core</artifactId>
+	    <version>7.1.0</version>
 	</dependency>
 	
     
