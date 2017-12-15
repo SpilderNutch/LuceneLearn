@@ -22,7 +22,8 @@ public class OnlyMybatisConfigTest {
 
 	@Test
 	public void testOnlyMybatisConfig() throws IOException{
-		String resource = "mybatis-config.xml";
+		
+		String resource = "mybatis-config_only.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		

@@ -31,7 +31,6 @@ public class SpringJdbcTemplateTest {
 		
 		@SuppressWarnings("unchecked")
 		List<Hotel> hotel = (List<Hotel>) jdbcTemplate.query(sql, new RowMapper(){
-			@Override
 			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Hotel hotel = new Hotel();
 				hotel.setLgHName(rs.getString("lg_hname"));

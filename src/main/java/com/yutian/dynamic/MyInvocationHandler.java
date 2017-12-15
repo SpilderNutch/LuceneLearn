@@ -17,7 +17,6 @@ public class MyInvocationHandler implements InvocationHandler{
         this.target = target;  
     }  
   
-    @Override  
     public Object invoke(Object o, Method method, Object[] args) throws Throwable {  
         if("getName".equals(method.getName())){  
             System.out.println("++++++before " + method.getName() + "++++++");  

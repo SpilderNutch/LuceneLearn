@@ -43,22 +43,23 @@
 	    <property name="filters" value="stat" />   
 		
 	</bean>
-	<!-- 纯测试 Spring  jdbcTemplate 中。-->
+	<!-- 纯测试 Spring  jdbcTemplate 中。
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
         <property name = "dataSource" ref="dataSource"/>  
 	</bean> 
-
-	<!--  
+	-->
+	
+	  
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
   		<property name="dataSource" ref="dataSource" />
-  		<property name="configLocation" value="classpath:mybatis-config.xml"></property> 
+  		<!-- 在未添加该行代码之前，可以使用annotation方式，在Mapper.java文件定义方法，
+  		使用了该方法后，没有必要使用annotation方法，数据库表字段可以实现对应关系。 -->
+  		<property name="mapperLocations" value="classpath:xml/*.xml"></property>
 	</bean>
-	--> 
-	<!-- 
-	<bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
-    		<property name="mapperInterface" value="com.yutian.lucene.dao.HotelDao"></property>  
-  	    <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>  
-   </bean>
-    -->
-
+	
+	<bean id="hotelMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="com.yutian.lucene.mapper.HotelMapper" />
+	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
 </beans>

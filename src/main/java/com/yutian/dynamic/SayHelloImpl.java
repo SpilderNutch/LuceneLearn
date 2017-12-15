@@ -9,13 +9,11 @@ public class SayHelloImpl implements SayHello {
 	}
 	
 	
-	@Override
 	public void sayHello() {
 		System.out.println("Hello "+this.name);
 		
 	}
 
-	@Override
 	public void sayGoodBye() {
 		
 		System.out.println("GoodBye"+this.name);
