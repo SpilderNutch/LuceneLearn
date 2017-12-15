@@ -19,9 +19,11 @@ public class TestSpringMybatisConnection {
 		logger.info("{} class init begin",this.getClass().getName());
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml"});
-		
-		HotelMapper hotelMapper = (HotelMapper) context.getBean("hotelMapper");
-		Hotel hotel = hotelMapper.selectByPrimaryKey(11232);
+		//在未添加<bean id = "hotelDao">时，使用HotelMapper进行获取数据库中数据。
+		//HotelMapper hotelMapper = (HotelMapper) context.getBean("hotelMapper");
+		//Hotel hotel = hotelMapper.selectByPrimaryKey(11232);
+		HotelDao hotelDao = (HotelDao) context.getBean("hotelDao");
+		Hotel hotel = hotelDao.selectByPrimaryKey(11232);
 		System.out.println("hotel Message:"+hotel);
 		
 		

@@ -62,4 +62,14 @@
 	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
+	<!-- 在未加该行代码之前，使用context.getBean("hotelMapper")从而获取相应的对象。 -->
+	<bean id="hotelDao" class="com.yutian.lucene.dao.impl.HotelDaoImpl">
+		<property name="hotelMapper" ref="hotelMapper"/>
+	</bean>
+	
+	<!-- 在未加该行代码之前，使用context.getBean("hotelDao")从而获取相应的对象。 -->
+	<bean id="hotelDao" class="com.yutian.lucene.dao.impl.HotelDaoImpl">
+		<property name="hotelMapper" ref="hotelMapper"/>
+	</bean>
+	
 </beans>

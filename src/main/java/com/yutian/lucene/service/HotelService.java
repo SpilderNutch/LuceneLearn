@@ -1,5 +1,9 @@
 package com.yutian.lucene.service;
 
-public class HotelService {
+import com.yutian.lucene.entity.Hotel;
 
+public interface HotelService {
+
+	Hotel selectByPrimaryKey(Integer id);
+	
 }
