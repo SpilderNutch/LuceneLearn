@@ -9,8 +9,10 @@
 
 	<!--添加jdbc.properties、config.properties文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties,classpath:config.properties"/>
-	
+	<context:annotation-config/>
 
+	<context:component-scan base-package="com.yutian.lucene.*"/>
+	
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="url" value="${jdbc.url}"/>
 		<property name="username" value="${jdbc.username}"/>
@@ -57,19 +59,27 @@
   		<property name="mapperLocations" value="classpath:xml/*.xml"></property>
 	</bean>
 	
+	<!-- Mapper接口所在包，Spring自动匹配 -->
+   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+   	 <property name="basePackage" value="com.yutian.lucene.mapper"></property>
+   	  <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+   </bean>
+	
+	<!-- 屏蔽该bean,使用Mybatis扫描方式，加入Mapper class
 	<bean id="hotelMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 	  <property name="mapperInterface" value="com.yutian.lucene.mapper.HotelMapper" />
 	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
+	 -->
+	
 	
 	<!-- 在未加该行代码之前，使用context.getBean("hotelMapper")从而获取相应的对象。 -->
+	<!--  
 	<bean id="hotelDao" class="com.yutian.lucene.dao.impl.HotelDaoImpl">
 		<property name="hotelMapper" ref="hotelMapper"/>
 	</bean>
-	
-	<!-- 在未加该行代码之前，使用context.getBean("hotelDao")从而获取相应的对象。 -->
-	<bean id="hotelDao" class="com.yutian.lucene.dao.impl.HotelDaoImpl">
-		<property name="hotelMapper" ref="hotelMapper"/>
-	</bean>
-	
+	-->
+	 
+	 
+	 
 </beans>
