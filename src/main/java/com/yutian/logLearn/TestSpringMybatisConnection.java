@@ -1,5 +1,7 @@
 package com.yutian.logLearn;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.yutian.lucene.dao.HotelDao;
 import com.yutian.lucene.entity.Hotel;
 import com.yutian.lucene.mapper.HotelMapper;
+import com.yutian.util.DateTool;
 
 public class TestSpringMybatisConnection {
 
@@ -25,6 +28,10 @@ public class TestSpringMybatisConnection {
 		HotelDao hotelDao = (HotelDao) context.getBean("hotelDao");
 		Hotel hotel = hotelDao.selectByPrimaryKey(11232);
 		System.out.println("hotel Message:"+hotel);
+		Date lzDate = hotel.getLkLtime();//进
+		String lzDateFormate = DateTool.dateToString(lzDate, DateTool.dateTimeFormat);
+		
+		System.out.println(lzDateFormate);
 		
 		
 		logger.info("{} class init end",this.getClass().getName());
