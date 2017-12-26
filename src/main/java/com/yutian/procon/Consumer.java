@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StoredField;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
@@ -31,6 +35,7 @@ public class Consumer implements Runnable {
 	private volatile boolean isRunning = true;
 	private BlockingQueue<Hotel> queue;//阻塞队列
 	private static IndexWriter indexWriter;
+	private AtomicInteger consumerConut = new AtomicInteger(0);
 	static{
 		Analyzer analyzer = new StandardAnalyzer();
 		FSDirectory fsDirectory = null;
@@ -41,12 +46,14 @@ public class Consumer implements Runnable {
 			logger.error("Try to open directory {/Users/yuouyang/javadev/hotelIndex} fail");
 		}
 		IndexWriterConfig config = new IndexWriterConfig(analyzer);
+		
 		try {
 			indexWriter = new IndexWriter(fsDirectory, config);
 		} catch (IOException e) {
 			logger.error("e stack message:"+e.getMessage());
 			logger.error("init IndexWriter fail.");
 		}
+		
 	}
 	
 	
@@ -59,10 +66,14 @@ public class Consumer implements Runnable {
 			try {
 				Hotel hotel = queue.take();
 				logger.info("Consumer take..");
+				consumerConut.incrementAndGet();
 				Document doc = hotolTranslateToDoc(hotel);//将hotel转化为Doc文件
 				try {
 					indexWriter.addDocument(doc);
-					
+					/**
+					while(consumerConut.get()%40000==0){
+						indexWriter.flush();
+					}*/
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -80,16 +91,16 @@ public class Consumer implements Runnable {
 	//将Hotel数据转化为Doc，可以索引
 	private Document hotolTranslateToDoc(Hotel hotel) {
 		Document doc = new Document();
-		doc.add(new Field("id", hotel.getId().toString(), TextField.TYPE_STORED));
-		doc.add(new Field("lkName", nullToEmpty(hotel.getLkName()), TextField.TYPE_STORED));
-		doc.add(new Field("lkSex", nullToEmpty(hotel.getLkSex()), TextField.TYPE_STORED));
-		doc.add(new Field("lkIdCode", nullToEmpty(hotel.getLkIdCode()), TextField.TYPE_STORED));
+		doc.add(new Field("id", hotel.getId().toString(),StringField.TYPE_STORED));
+		doc.add(new Field("lkName", nullToEmpty(hotel.getLkName()), StringField.TYPE_STORED));
+		doc.add(new Field("lkSex", nullToEmpty(hotel.getLkSex()), StoredField.TYPE));
+		doc.add(new Field("lkIdCode", nullToEmpty(hotel.getLkIdCode()), StringField.TYPE_STORED));
 		doc.add(new Field("lkAddress", nullToEmpty(hotel.getLkAddress()), TextField.TYPE_STORED));
-		doc.add(new Field("lgHName", nullToEmpty(hotel.getLgHName()), TextField.TYPE_STORED));
+		doc.add(new Field("lgHName", nullToEmpty(hotel.getLgHName()), StringField.TYPE_STORED));
 		doc.add(new Field("lgHAddress", nullToEmpty(hotel.getLgHAddress()), TextField.TYPE_STORED));
 		doc.add(new Field("lkNoroom", nullToEmpty(hotel.getLkNoroom()), TextField.TYPE_STORED));
-		doc.add(new Field("lkLtime", dateToStr(hotel.getLkLtime()), TextField.TYPE_STORED));
-		doc.add(new Field("lkEtime", dateToStr(hotel.getLkEtime()), TextField.TYPE_STORED));
+		doc.add(new Field("lkLtime", dateToStr(hotel.getLkLtime()), StringField.TYPE_STORED));
+		doc.add(new Field("lkEtime", dateToStr(hotel.getLkEtime()), StringField.TYPE_STORED));
 		return doc;
 	}
 

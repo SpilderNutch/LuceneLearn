@@ -21,23 +21,42 @@ public class RunProdConsu {
 	public static Logger logger = LoggerFactory.getLogger(RunProdConsu.class);
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
-		BlockingQueue<Hotel> queue = new LinkedBlockingQueue<Hotel>(40);
+		BlockingQueue<Hotel> queue = new LinkedBlockingQueue<Hotel>(100);
 		Producer producer = new Producer(queue);
 		Consumer consumer = new Consumer(queue);
+		Consumer consumer2 = new Consumer(queue);
 		
 		logger.info("==========Runnable init begin to Run=================");
 		
 		ExecutorService service = Executors.newCachedThreadPool();
 		service.execute(producer);
 		service.execute(consumer);
+		service.execute(consumer2);
 		
-		Thread.sleep(10*1000);
-		producer.stop();
-		consumer.stop();
+		Thread.sleep(4*60*60*1000);
+		
+		logger.info("Thread.sleep over!!");
+		
+		if(!producer.isRunning()){
+			consumer.stop();
+			consumer2.stop();
+		}
+		
+		try{
+			if(producer.isRunning()){//暂未结束
+				producer.stop();//停止
+				logger.info("index record:"+producer.getHotelCount().get());
+				consumer.stop();
+				consumer2.stop();
+			}
+		}catch(Exception e){
+			logger.error("stop 、shutdown error!");
+		}
 		
 		logger.info("==========Runnable init end to Run=================");
 		
 		service.shutdown();
+		logger.info("==========service.shutdown()=================");
 		
 	}
 	

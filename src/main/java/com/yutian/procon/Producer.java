@@ -39,19 +39,25 @@ public class Producer implements Runnable {
 	
 	public void run() {
 		while(isRunning){
-			for(;hotelCount.get()<2000; ){
+			for(;hotelCount.get()<70278106; ){
 				Hotel hotel = hotelDao.selectByPrimaryKey(hotelCount.incrementAndGet());
 				int getCountId = count.incrementAndGet();
 				logger.info("getCountId："+getCountId);
 				try {
-					if (hotel!=null &&!queue.offer(hotel, 2, TimeUnit.SECONDS)) {//加入队列
-					    logger.error("add Queue Fail");
+//					if (hotel!=null &&!queue.offer(hotel, 2, TimeUnit.SECONDS)) {//加入队列
+//					    logger.error("add Queue Fail");
+//					}
+					if(hotel!=null){
+						queue.put(hotel);
 					}
 				} catch (InterruptedException e) {
 					logger.error("message fail:"+e.getMessage());
 					e.printStackTrace();
 					Thread.currentThread().interrupt();
 				}
+			}
+			if(hotelCount.get()==70278106){
+				stop();
 			}
 		}
 	}
@@ -62,8 +68,19 @@ public class Producer implements Runnable {
 	public void stop(){
 		isRunning = false;
 	}
-	
-	
+
+	/**
+	 * 获取该线程执行状态
+	 * @return
+	 */
+	public boolean isRunning() {
+		return isRunning;
+	}
+
+	public static AtomicInteger getHotelCount() {
+		return hotelCount;
+	}
+
 	
 	
 }

@@ -5,8 +5,9 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <!-- Bootstrap -->
 <link href="${ctx}/static/embed/bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/embed/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/jquery-3.2.1.js"></script>
-
+<script type="text/javascript" src="${ctx}/static/js/DateUtil.js"></script>
 <script type="text/javascript">
 	var ctx = '${ctx}';
 </script>
@@ -23,30 +24,18 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 			      </button>
-			      <a class="navbar-brand" href="#">Brand</a>
+			      <a class="navbar-brand" href="#">Bestest</a>
 			    </div>
 			
-			    <!-- Collect the nav links, forms, and other content for toggling -->
-			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			      <ul class="nav navbar-nav">
-			        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-			        <li><a href="#">Link</a></li>
-			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-			          <ul class="dropdown-menu">
-			            <li><a href="#">Action</a></li>
-			            <li><a href="#">Another action</a></li>
-			            <li><a href="#">Something else here</a></li>
-			            <li role="separator" class="divider"></li>
-			            <li><a href="#">Separated link</a></li>
-			            <li role="separator" class="divider"></li>
-			            <li><a href="#">One more separated link</a></li>
-			          </ul>
-			        </li>
-			      </ul>
 			      <form class="navbar-form navbar-left">
 			        <div class="form-group">
-			          <input type="text" id="name" class="form-control" placeholder="Search">
+			          <input type="text" id="name" class="form-control" placeholder="Name">
+			          <input type="text" id="idCard" class="form-control" placeholder="idCard">
+			          <input type="text" id="lkNoroom" class="form-control" placeholder="lkNoroom">
+			          <input type="text" id="lkLtimeBefore" class="form-control" placeholder="lkLtimeBefore" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00'})" >
+			          <input type="text" id="lkLtime" class="form-control" placeholder="lkLtime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 23:59:59'})" >
+			          <input type="text" id="lkEtime" class="form-control" placeholder="lkEtime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00'})">
+			          <input type="text" id="lkEtimeAfter" class="form-control" placeholder="lkEtimeAfter" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 23:59:59'})">
 			        </div>
 			        <button type="button" class="btn btn-default" id="queryButton">查询</button>
 			      </form>
@@ -56,9 +45,26 @@
 	
 	<!-- 结果集的展现区域 -->
 	<div class="container-fluid">
-		
-	
-	
+		<div class="span12" id="costTime"></div>
+		<table class="table table-bordered table-condensed table-condensed table-hover table-sort-nobgimg" id="tableResult" style="display: none;">
+		    <thead>
+		        <tr class="span12">
+		        		<th>序号</th>
+		            <th>姓名</th>
+		            <th>性别</th>
+		            <th>身份证号</th>
+		            <th>旅客地址</th>
+		            <th>旅馆名</th>
+		            <th>房号</th>
+		            <th>入住时间</th>
+		            <th>退房时间</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="tbody"><!--使用 js用来写html -->
+		        
+		    </tbody>
+		</table>
 	</div>
 	
 
